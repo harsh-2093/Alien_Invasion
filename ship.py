@@ -13,8 +13,20 @@ class Ship:
         self.rect=self.image.get_rect()
         
         # start each new ship at the bottom centre of the screen.
-        
         self.rect.midbottom=self.screen_rect.midbottom
+        
+        #movement flag; start with a ship;s not moving.
+        self.moving_right=False
+        self.moving_left=False
+        
+    def update(self):
+        """update the ship's position based ont the movement flag."""
+        if self.moving_right:
+            self.rect.x+=1
+        elif self.moving_left:
+            self.rect.x-=1        
+        
+        
     def blitme(self):
         """draw the ship ai its current location"""
         self.screen.blit(self.image,self.rect)
