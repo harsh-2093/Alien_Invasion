@@ -24,7 +24,9 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship=Ship(self)
         self.bullets=pygame.sprite.Group()
-        self.alien=Alien(self)
+        self.aliens=pygame.sprite.Group()
+        
+        self._create_fleet()
         
     def run_game(self):
         """start the main loop for the game"""
@@ -94,9 +96,25 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()            
         self.ship.blitme()
-        self.alien.blitme()
+        self.aliens.draw(self.screen)
         
         pygame.display.flip()
+    
+    def _create_fleet(self):
+        """cretae the fleet of aliens."""
+        #creating an alien until there is no room left
+        #spacing b/w alien is one alien width
+        alien=Alien(self)
+        alien_width=alien.rect.width
+        
+        current_x=alien_width
+        
+        while current_x <(self.settings.screen_width -2*alien_width):
+            new_alien=Alien(self)
+            new_alien.x=current_x
+            new_alien.rect.x=current_x
+            self.aliens.add(new_alien)
+            current_x+=2*alien_width
 if __name__=='__main__':
     #make a game instance , and run the game.
     ai=AlienInvasion()
